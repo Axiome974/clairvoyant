@@ -6,6 +6,8 @@ import errorCatcher from "../utils/errorCatcher";
 import jwtAuthMiddleware from "../middlewares/jwtAuthMiddleware";
 import roleCheckerMiddleware from "../middlewares/roleCheckerMiddleware";
 import {ROLE_ADMIN} from "../enums/roleEnum";
+import paginationQueryMiddleware from "../middlewares/paginationQueryMiddleware";
+import {userCreateSchema} from "../schemas/userSchema";
 
 
 const userRouter = Router();
@@ -13,13 +15,14 @@ const userRouter = Router();
 userRouter.get("/",
     jwtAuthMiddleware,
     roleCheckerMiddleware(ROLE_ADMIN),
+    paginationQueryMiddleware,
     errorCatcher(userController.browse)
 );
 
 userRouter.post("/",
     jwtAuthMiddleware,
     roleCheckerMiddleware(ROLE_ADMIN),
-    schemaValidationMiddleware(User.prototype),
+    schemaValidationMiddleware(userCreateSchema),
     errorCatcher(userController.add)
 );
 

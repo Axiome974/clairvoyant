@@ -1,6 +1,5 @@
 import sequelize from "../utils/database";
-import Sequelize from "sequelize";
-import AjvSchemaModel from "../types/ISchemaModel";
+import Sequelize, {Model} from "sequelize";
 
 export interface IUser {
     firstname: string;
@@ -11,7 +10,7 @@ export interface IUser {
 }
 
 
-class User extends AjvSchemaModel<IUser> implements IUser{
+class User extends Model implements IUser{
     public id!: number;
     public firstname!: string;
     public lastname!: string;
@@ -52,17 +51,5 @@ User.init({
         modelName: 'user' // Nom du modèle
     }
 );
-//-- Schema validation
-User.prototype.ajvSchema = {
-    type: 'object',
-    properties: {
-        firstname: { type: 'string' },
-        lastname: { type: 'string' },
-        password: { type: 'string' },
-        email: { type: 'string', format: 'email' }
-    },
-    required: ['firstname', 'lastname', 'email', 'password'],
-    additionalProperties: false
-};
 
 export default User;

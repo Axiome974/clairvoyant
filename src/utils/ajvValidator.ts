@@ -1,24 +1,17 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import AjvSchemaModel from "../types/ISchemaModel";
+import { AjvSchema } from "../types/AjvSchema";
 
 const ajv = new Ajv();
 addFormats(ajv);
 
-export interface ajvValidator {
-    validate(Model:AjvSchemaModel<any>, data:object):boolean;
-}
 
-const ajvValidator:ajvValidator = {
 
-    validate: function(Model:AjvSchemaModel<any>, data:object){
+const ajvValidator = {
 
-        if( !Model.ajvSchema ){
-            throw new Error('Schema validator not found');
-            return null;
-        }
+    validate:<boolean>function( ajvSchema:AjvSchema, data:object ){
 
-        const validate = ajv.compile(Model.ajvSchema);
+        const validate = ajv.compile(ajvSchema);
         const valid = validate(data);
 
         if (!valid) {
@@ -28,7 +21,6 @@ const ajvValidator:ajvValidator = {
 
         return true;
     }
-
 
 }
 

@@ -5,7 +5,7 @@ import userSeeder from "./seeders/userSeeder";
 async function loadFixtures() {
 
     // Create 10 users
-    for( let i = 0; i < 10; i++) {
+    for( let i = 0; i < 250; i++) {
        await userSeeder.createAndSaveFakeUser();
     }
 
